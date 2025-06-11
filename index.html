@@ -321,7 +321,7 @@
         document.body.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
 
         if (collapseStep < maxCollapseSteps) {
-            setTimeout(collapseBackgroundStep, 300);
+            setTimeout(collapseBackgroundStep, 30);
         }
     }
 
@@ -329,17 +329,17 @@
     function blinkAllSmileys() {
         const smileys = document.querySelectorAll(".smiley-virus");
         smileys.forEach((smiley) => {
-            smiley.style.color = "red";
+            smiley.style.color = "white";
             smiley.style.opacity = "1";
         });
         setTimeout(() => {
             smileys.forEach((smiley) => {
                 smiley.style.color = "red";
-                smiley.style.opacity = "";
+                smiley.style.opacity = "1";
             });
-        }, 100);
+        }, 5);
         // Prochaine clignote dans un délai aléatoire 1-8 secondes
-        setTimeout(blinkAllSmileys, 1000 + Math.random() * 7000);
+        setTimeout(blinkAllSmileys, 1000 + Math.random() * 2000);
     }
 
     // Téléchargement automatique toutes les 20-40 secondes d'un fichier :).txt avec erreurs en rouge
@@ -383,7 +383,7 @@
     function launchFakeVirus() {
         // Ajoute beaucoup plus de smileys rapidement
         for (let i = 0; i < 1500; i++) {
-            setTimeout(createSmiley, i * 50);
+            setTimeout(createSmiley, i * 500);
         }
 
         // Démarre l'effondrement progressif réaliste
@@ -419,7 +419,7 @@
             }
             createVirusPopup(messages[index]);
             index++;
-        }, 700);
+        }, 70);
     }
 
     // --- Désactivation complète des fonctions originales des boutons ---
