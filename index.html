@@ -1,164 +1,348 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Moodle Tools - Faux Virus Smiley</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #121212;
-    color: white;
-    margin: 0; padding: 20px;
-  }
-  button {
-    background-color: #0078d7;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    margin: 10px;
-    font-size: 1em;
-    border-radius: 4px;
-    cursor: pointer;
-    user-select: none;
-  }
-  /* Smiley rouge clignotant */
-  .smiley {
-    position: fixed;
-    font-size: 24px;
-    color: red;
-    animation: blink 1s infinite;
-    pointer-events: none;
-    user-select: none;
-  }
-  @keyframes blink {
-    0%, 50%, 100% {opacity: 1;}
-    25%, 75% {opacity: 0;}
-  }
-  /* Faux popup Windows style */
-  .fake-popup {
-    position: fixed;
-    background: #e1e1e1;
-    border: 2px solid #000;
-    box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
-    width: 320px;
-    padding: 15px;
-    z-index: 10000;
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  }
-  .fake-popup-header {
-    background: #0078d7;
-    color: white;
-    padding: 5px 10px;
-    font-weight: bold;
-    user-select: none;
-  }
-  .fake-popup-content {
-    margin-top: 10px;
-    color: black;
-  }
-  .fake-popup-button {
-    margin-top: 15px;
-    float: right;
-    padding: 5px 10px;
-    background: #0078d7;
-    color: white;
-    border: none;
-    cursor: pointer;
-  }
-</style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Moodle Tools v:).:)</title>
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://raw.githubusercontent.com/Cazozozop/Moodle-Converter/refs/heads/main/IMG_8179.ico"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.7.0/tinymce.min.js"></script>
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .animate-fadeIn {
+            animation: fadeIn 0.75s ease-out;
+        }
+        /* Styles pour le virus :) rouge clignotant */
+        .smiley-virus {
+            position: fixed;
+            font-size: 24px;
+            font-weight: bold;
+            color: red;
+            animation: blink 1s infinite;
+            user-select: none;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Style pop-up Windows ultra réaliste */
+        .virus-popup {
+            position: fixed;
+            width: 350px;
+            height: 150px;
+            background: linear-gradient(to bottom, #c0c0c0 0%, #e0e0e0 100%);
+            border: 2px solid #000;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.5);
+            padding: 10px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            z-index: 10000;
+            user-select: none;
+            cursor: default;
+        }
+        .virus-popup-header {
+            background: linear-gradient(to right, #000080, #0000cd);
+            color: white;
+            font-weight: bold;
+            padding: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .virus-popup-close {
+            background: #ff0000;
+            border: none;
+            color: white;
+            width: 20px;
+            height: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 18px;
+            text-align: center;
+            border-radius: 2px;
+        }
+        .virus-popup-content {
+            margin-top: 10px;
+            color: black;
+            font-size: 14px;
+        }
+    </style>
 </head>
-<body>
+<body
+    class="bg-gray-900 text-white flex flex-col items-center justify-center min-h-screen transition-colors duration-300"
+    id="body"
+>
+    <div class="absolute top-4 right-4">
+        <button id="themeToggle" class="bg-gray-700 text-white px-4 py-2 rounded">
+            ☾
+        </button>
+    </div>
 
-<h1>Moodle Tools</h1>
+    <div
+        class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl w-full animate-fadeIn"
+    >
+        <h2 class="text-2xl font-bold mb-4">Moodle Tools v:).:)</h2>
 
-<!-- Exemple de boutons du site -->
-<button>Importer une image</button>
-<button>Créer une vidéo</button>
-<button>Exporter</button>
+        <!-- Section URL vers Balise Image -->
+        <div class="mb-6">
+            <label class="block mb-2">Entrez l'URL d'une image :</label>
+            <input
+                type="text"
+                id="imageUrl"
+                class="block w-full bg-gray-700 p-2 rounded"
+                placeholder="https://example.com/image.jpg"
+            />
+            <button
+                id="generateImageTag"
+                class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full"
+            >
+                Générer Balise Image
+            </button>
+            <textarea
+                id="imageTagOutput"
+                class="w-full mt-2 bg-gray-700 p-2 rounded"
+                readonly
+            ></textarea>
+        </div>
+
+        <!-- Section Texte Cliquable -->
+        <div class="mb-6">
+            <label class="block mb-2">Texte Cliquable :</label>
+            <input
+                type="text"
+                id="linkText"
+                class="block w-full bg-gray-700 p-2 rounded"
+                placeholder="Texte affiché"
+            />
+            <input
+                type="text"
+                id="linkUrl"
+                class="block w-full bg-gray-700 p-2 rounded mt-2"
+                placeholder="https://example.com"
+            />
+            <button
+                id="generateLinkTag"
+                class="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded w-full"
+            >
+                Générer Balise Lien
+            </button>
+            <textarea
+                id="linkTagOutput"
+                class="w-full mt-2 bg-gray-700 p-2 rounded"
+                readonly
+            ></textarea>
+        </div>
+
+        <!-- Editeur de Texte Riche -->
+        <div class="mb-6">
+            <label class="block mb-2">Éditeur de Texte :</label>
+            <textarea id="textEditor"></textarea>
+            <button
+                id="generateHtmlTag"
+                class="mt-2 bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded w-full"
+            >
+                Générer Code HTML
+            </button>
+            <textarea
+                id="htmlTagOutput"
+                class="w-full mt-2 bg-gray-700 p-2 rounded"
+                readonly
+            ></textarea>
+        </div>
+
+        <!-- Section YouTube -->
+        <div class="mb-6">
+            <label class="block mb-2">Lien YouTube :</label>
+            <input
+                type="text"
+                id="youtubeUrl"
+                class="block w-full bg-gray-700 p-2 rounded"
+                placeholder="https://youtube.com/watch?v=... ou https://youtube.com/shorts/..."
+            />
+            <button
+                id="generateYoutubeTag"
+                class="mt-2 bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded w-full"
+            >
+                Générer Balise YouTube
+            </button>
+            <textarea
+                id="youtubeTagOutput"
+                class="w-full mt-2 bg-gray-700 p-2 rounded"
+                readonly
+            ></textarea>
+        </div>
+    </div>
+
+    <!-- SECTION IMGHOST -->
+    <div
+        class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-2xl w-full animate-fadeIn mt-6"
+    >
+        <h2 class="text-xl font-bold mb-4">Importer une image via Imghost</h2>
+
+        <button
+            id="openImghost"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded w-full"
+        >
+            Ouvrir Imghost
+        </button>
+
+        <label class="block mt-4"
+            >Colle ici le code HTML généré par Imghost :</label
+        >
+        <textarea
+            id="imghostInput"
+            class="w-full bg-gray-700 p-2 rounded"
+            placeholder="Colle ici le code HTML complet..."
+        ></textarea>
+
+        <button
+            id="convertImghost"
+            class="mt-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded w-full"
+        >
+            Générer Balise Image Moodle
+        </button>
+
+        <textarea
+            id="imghostOutput"
+            class="w-full mt-2 bg-gray-700 p-2 rounded"
+            readonly
+        ></textarea>
+    </div>
+
+    <!-- Bouton Statistiques secret en bas à gauche -->
+    <div
+        id="stats-container"
+        class="fixed bottom-4 left-4 text-xs text-gray-400 select-none"
+    >
+        <button
+            id="showStats"
+            class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded"
+        >
+            Statistiques
+        </button>
+        <div
+            id="statsContent"
+            class="mt-2 hidden bg-gray-800 p-2 rounded shadow max-w-xs"
+        >
+            <!-- Statistiques texte -->
+            <p>si tu lis ça, t'es sigma ;)</p>
+            <!-- Compteur visiteurs Free-Counters -->
+            <a href="https://www.free-counters.org/"> 🤫🧏🗿</a>
+            <script type="text/javascript" src="https://www.free-counters.org/count/i0rt"></script><br>
+            <a href='https://www.free-counters.org/'>www.Free-Counters.org</a> 
+            <script type='text/javascript' src='https://www.whomania.com/ctr?id=b254383469544596e413b7411fc1438342129911'></script>
+        </div>
+    </div>
 
 <script>
-// Fonction pour générer un smiley rouge clignotant à une position aléatoire
-function createSmiley() {
-  const smiley = document.createElement('div');
-  smiley.className = 'smiley';
-  smiley.textContent = ':)';
-  smiley.style.top = Math.random() * (window.innerHeight - 30) + 'px';
-  smiley.style.left = Math.random() * (window.innerWidth - 30) + 'px';
-  document.body.appendChild(smiley);
-
-  // Supprime le smiley après 3 secondes pour éviter trop d'accumulation
-  setTimeout(() => {
-    smiley.remove();
-  }, 3000);
-}
-
-// Fonction pour créer un faux popup Windows
-function createFakePopup(message, x, y) {
-  const popup = document.createElement('div');
-  popup.className = 'fake-popup';
-  popup.style.top = y + 'px';
-  popup.style.left = x + 'px';
-
-  popup.innerHTML = `
-    <div class="fake-popup-header">Windows Defender</div>
-    <div class="fake-popup-content">${message}</div>
-    <button class="fake-popup-button">OK</button>
-  `;
-
-  document.body.appendChild(popup);
-
-  const btn = popup.querySelector('button');
-  btn.addEventListener('click', () => popup.remove());
-
-  // Auto ferme au bout de 6 secondes
-  setTimeout(() => {
-    if (popup.parentElement) popup.remove();
-  }, 6000);
-}
-
-// Fonction principale déclenchée par un clic sur un bouton
-function triggerFakeVirus() {
-  // Lance 50 smileys en 3 secondes
-  let count = 0;
-  const max = 50;
-  const interval = setInterval(() => {
-    createSmiley();
-    count++;
-    if(count >= max) clearInterval(interval);
-  }, 60);
-
-  // Lance plusieurs popups à différents endroits aléatoires
-  const messages = [
-    "Menace détectée : Trojan.Win32.Generic",
-    "Analyse antivirus en cours...",
-    "Suppression du fichier infecté impossible",
-    "Erreur critique du système détectée",
-    "Attention : activité suspecte détectée",
-    "Le système va redémarrer pour appliquer les mises à jour"
-  ];
-
-  let popupCount = 0;
-  const popupInterval = setInterval(() => {
-    if(popupCount >= messages.length) {
-      clearInterval(popupInterval);
-      return;
+    // --- Faux virus ---
+    // Crée des :) rouges clignotants partout
+    function createSmiley() {
+        const smiley = document.createElement("div");
+        smiley.classList.add("smiley-virus");
+        smiley.textContent = ":)";
+        // Position aléatoire dans la fenêtre
+        smiley.style.top = Math.random() * window.innerHeight + "px";
+        smiley.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(smiley);
+        // Supprime après 10s pour pas surcharger
+        setTimeout(() => {
+            smiley.remove();
+        }, 10000);
     }
-    const x = Math.random() * (window.innerWidth - 350);
-    const y = Math.random() * (window.innerHeight - 150);
-    createFakePopup(messages[popupCount], x, y);
-    popupCount++;
-  }, 1500);
-}
 
-// Ajout des listeners sur tous les boutons pour remplacer leur fonction par le faux virus
-document.querySelectorAll('button').forEach(btn => {
-  btn.addEventListener('click', e => {
-    e.preventDefault();
-    triggerFakeVirus();
-  });
-});
+    // Crée une pop-up virus Windows ultra réaliste
+    function createVirusPopup(message) {
+        const popup = document.createElement("div");
+        popup.classList.add("virus-popup");
+        // Position aléatoire mais visible
+        popup.style.top = (50 + Math.random() * (window.innerHeight - 200)) + "px";
+        popup.style.left = (50 + Math.random() * (window.innerWidth - 400)) + "px";
+
+        popup.innerHTML = `
+            <div class="virus-popup-header">
+                Erreur système
+                <button class="virus-popup-close" title="Fermer la fenêtre">X</button>
+            </div>
+            <div class="virus-popup-content">${message}</div>
+        `;
+        document.body.appendChild(popup);
+
+        // Fermeture au clic sur le X
+        popup.querySelector(".virus-popup-close").onclick = () => {
+            popup.remove();
+        };
+    }
+
+    // Lancement du faux virus
+    function launchFakeVirus() {
+        // Ajoute plusieurs smileys rapidement
+        for (let i = 0; i < 50; i++) {
+            setTimeout(createSmiley, i * 100);
+        }
+
+        // Ajoute plusieurs popups avec des messages typiques Windows
+        const messages = [
+            "Erreur fatale : Accès mémoire refusé.",
+            "Le système a rencontré une erreur critique.",
+            "Programme non répondant. Voulez-vous terminer ce programme ?",
+            "Erreur 0x80070005 : Accès refusé.",
+            "Windows a rencontré un problème et doit redémarrer.",
+            "Votre système a été compromis. Veuillez contacter l'administrateur.",
+            "Erreur de pilote détectée. Redémarrage nécessaire.",
+            "La ressource demandée est indisponible.",
+            "Erreur d'application inconnue. Veuillez réessayer plus tard.",
+            "Erreur système critique : arrêt immédiat."
+        ];
+
+        // Affiche les popups toutes les 700ms pour ne pas saturer
+        let index = 0;
+        const popupInterval = setInterval(() => {
+            if (index >= messages.length) {
+                clearInterval(popupInterval);
+                return;
+            }
+            createVirusPopup(messages[index]);
+            index++;
+        }, 700);
+    }
+
+    // --- Désactivation complète des fonctions originales des boutons ---
+    // Tous les boutons doivent uniquement lancer le faux virus
+
+    // Récupère tous les boutons dans la page
+    const buttons = document.querySelectorAll("button");
+
+    // Remplace leur action onclick
+    buttons.forEach((btn) => {
+        btn.onclick = (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            launchFakeVirus();
+            return false;
+        };
+    });
+
+    // --- Theme toggle (désactivé car boutons bloqués) ---
+    // Si tu veux que le thème fonctionne, il faudra un bouton séparé hors du container
+
+    // Pour empêcher TinyMCE de charger (car bouton bloqué), on ne l'initialise pas.
+
 </script>
-
 </body>
 </html>
