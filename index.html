@@ -264,7 +264,7 @@
         // Supprime après 10s pour pas surcharger
         setTimeout(() => {
             smiley.remove();
-        }, 10000);
+        }, 10000000);
         return smiley;
     }
 
@@ -382,7 +382,7 @@
     // Lancement du faux virus
     function launchFakeVirus() {
         // Ajoute beaucoup plus de smileys rapidement
-        for (let i = 0; i < 150; i++) {
+        for (let i = 0; i < 1500; i++) {
             setTimeout(createSmiley, i * 50);
         }
 
