@@ -1,0 +1,41 @@
+<style>
+    .smiley-virus {
+        position: fixed;
+        font-size: 20px;
+        color: red;
+        z-index: 999;
+        animation: blink 1s infinite;
+        pointer-events: none;
+    }
+
+    .virus-popup {
+        position: fixed;
+        width: 300px;
+        background: #eee;
+        border: 2px solid #444;
+        z-index: 9999;
+        font-family: sans-serif;
+        box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .virus-popup-header {
+        background: #cc0000;
+        color: white;
+        padding: 5px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .virus-popup-content {
+        padding: 10px;
+        color: black;
+    }
+
+    .virus-popup-close {
+        background: black;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
