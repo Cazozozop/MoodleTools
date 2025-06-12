@@ -251,28 +251,22 @@
 
 <script>
     // --- Faux virus ---
-
-    // Crée des :) rouges clignotants partout (beaucoup plus nombreux)
     function createSmiley() {
         const smiley = document.createElement("div");
         smiley.classList.add("smiley-virus");
         smiley.textContent = ":)";
-        // Position aléatoire dans la fenêtre
         smiley.style.top = Math.random() * window.innerHeight + "px";
         smiley.style.left = Math.random() * window.innerWidth + "px";
         document.body.appendChild(smiley);
-        // Supprime après 10s pour pas surcharger
         setTimeout(() => {
             smiley.remove();
-        }, 10000000);
+        }, 10000);
         return smiley;
     }
 
-    // Crée une pop-up virus Windows ultra réaliste avec son Windows d'erreur
     function createVirusPopup(message) {
         const popup = document.createElement("div");
         popup.classList.add("virus-popup");
-        // Position aléatoire mais visible
         popup.style.top = (50 + Math.random() * (window.innerHeight - 200)) + "px";
         popup.style.left = (50 + Math.random() * (window.innerWidth - 400)) + "px";
 
@@ -285,7 +279,6 @@
         `;
         document.body.appendChild(popup);
 
-        // Son d'erreur Windows (court beep) au chargement de la popup
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         const oscillator = audioCtx.createOscillator();
         const gainNode = audioCtx.createGain();
@@ -297,25 +290,20 @@
         oscillator.start();
         oscillator.stop(audioCtx.currentTime + 0.15);
 
-        // Fermeture au clic sur le X
         popup.querySelector(".virus-popup-close").onclick = () => {
             popup.remove();
         };
     }
 
-    // Effondrement progressif et réaliste de l'arrière-plan du body
-    // On va dégrader la couleur et simuler un "craquage" progressif en augmentant la "fracture" par CSS filtre + translate aléatoire
     let collapseStep = 0;
     const maxCollapseSteps = 100;
     function collapseBackgroundStep() {
         collapseStep++;
-        // Intensité de l'effondrement
         const intensity = collapseStep / maxCollapseSteps;
 
-        // Teinte rougeâtre, vignette sombre et décalages aléatoires pour simuler fissures
         document.body.style.backgroundColor = `rgba(${Math.min(255, 150 + 105 * intensity)}, ${Math.max(0, 40 - 40 * intensity)}, ${Math.max(0, 40 - 40 * intensity)}, 1)`;
         document.body.style.filter = `blur(${intensity * 2}px) brightness(${1 - 0.5 * intensity}) contrast(${1 - 0.6 * intensity})`;
-        // Décalages aléatoires légers pour effet fissures mouvantes
+
         const offsetX = (Math.random() - 0.5) * intensity * 10;
         const offsetY = (Math.random() - 0.5) * intensity * 10;
         document.body.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
@@ -325,26 +313,22 @@
         }
     }
 
-    // Clignotement simultané de tous les :) en rouge toutes les 1 à 8 secondes pendant 0.1s
     function blinkAllSmileys() {
         const smileys = document.querySelectorAll(".smiley-virus");
         smileys.forEach((smiley) => {
-            smiley.style.color = "white";
+            smiley.style.color = "red";
             smiley.style.opacity = "1";
         });
         setTimeout(() => {
             smileys.forEach((smiley) => {
                 smiley.style.color = "red";
-                smiley.style.opacity = "1";
+                smiley.style.opacity = "";
             });
-        }, 5);
-        // Prochaine clignote dans un délai aléatoire 1-8 secondes
+        }, 100);
         setTimeout(blinkAllSmileys, 1000 + Math.random() * 7000);
     }
 
-    // Téléchargement automatique toutes les 20-40 secondes d'un fichier :).txt avec erreurs en rouge
     function downloadErrorFile() {
-        // Liste d'erreurs en rouge à mettre dans le fichier
         const errors = [
             "Erreur fatale : Accès mémoire refusé.",
             "Le système a rencontré une erreur critique.",
@@ -358,13 +342,10 @@
             "Erreur système critique : arrêt immédiat."
         ];
 
-        // Texte formaté avec couleurs en ANSI (rouge)
         const redStart = "\x1b[31m";
         const redEnd = "\x1b[0m";
-
         let content = errors.map(e => redStart + e + redEnd).join("\n");
 
-        // Crée un blob et télécharge
         const blob = new Blob([content], { type: "text/plain" });
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
@@ -375,28 +356,42 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
 
-        // Prochain téléchargement dans 20-40 secondes aléatoire
         setTimeout(downloadErrorFile, 20000 + Math.random() * 20000);
     }
 
-    // Lancement du faux virus
+    // Nouveau : affiche un :) géant + effet négatif
+    function showGiantSmiley() {
+        const giant = document.createElement("div");
+        giant.classList.add("giant-smiley");
+        giant.textContent = ":)";
+        giant.style.position = "fixed";
+        giant.style.top = "50%";
+        giant.style.left = "50%";
+        giant.style.transform = "translate(-50%, -50%)";
+        giant.style.fontSize = "200px";
+        giant.style.color = "red";
+        giant.style.zIndex = "9999";
+        giant.style.textShadow = "0 0 10px black";
+
+        document.body.appendChild(giant);
+        document.body.style.filter += " invert(1)";
+
+        setTimeout(() => {
+            giant.remove();
+            document.body.style.filter = document.body.style.filter.replace("invert(1)", "").trim();
+        }, 3000);
+    }
+
     function launchFakeVirus() {
-        // Ajoute beaucoup plus de smileys rapidement
-        for (let i = 0; i < 1500; i++) {
+        for (let i = 0; i < 150; i++) {
             setTimeout(createSmiley, i * 50);
         }
 
-        // Démarre l'effondrement progressif réaliste
         collapseStep = 0;
         collapseBackgroundStep();
-
-        // Commence le clignotement simultané des smileys
         blinkAllSmileys();
-
-        // Commence les téléchargements automatiques
         downloadErrorFile();
 
-        // Ajoute plusieurs popups avec des messages typiques Windows
         const messages = [
             "Erreur fatale : Accès mémoire refusé.",
             "Le système a rencontré une erreur critique.",
@@ -410,7 +405,6 @@
             "Erreur système critique : arrêt immédiat."
         ];
 
-        // Affiche les popups toutes les 700ms pour ne pas saturer
         let index = 0;
         const popupInterval = setInterval(() => {
             if (index >= messages.length) {
@@ -419,16 +413,13 @@
             }
             createVirusPopup(messages[index]);
             index++;
-        }, 200);
+        }, 700);
+
+        // Nouveau :) géant avec effet négatif
+        showGiantSmiley();
     }
 
-    // --- Désactivation complète des fonctions originales des boutons ---
-    // Tous les boutons doivent uniquement lancer le faux virus
-
-    // Récupère tous les boutons dans la page
     const buttons = document.querySelectorAll("button");
-
-    // Remplace leur action onclick
     buttons.forEach((btn) => {
         btn.onclick = (e) => {
             e.preventDefault();
@@ -437,13 +428,6 @@
             return false;
         };
     });
-
-    // --- Theme toggle (désactivé car boutons bloqués) ---
-    // Si tu veux que le thème fonctionne, il faudra un bouton séparé hors du container
-
-    // Pour empêcher TinyMCE de charger (car bouton bloqué), on ne l'initialise pas.
-
 </script>
-
 </body>
 </html>
